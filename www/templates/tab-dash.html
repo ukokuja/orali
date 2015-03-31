@@ -1,16 +1,44 @@
 <ion-view view-title="Profesionales">
  
-  <ion-content class="padding">
+  <ion-content class="">
   <div class="list">
 
   <div class="item item-input-inset">
     <label class="item-input-wrapper">
-      <input type="text" placeholder="Buscar en Orali">
+      <input type="text" placeholder="Buscar en Orali" ng-model="search.text">
     </label>
-    <button class="button button-small">
+    <button class="button button-small" ng-click="search()">
       Buscar
     </button>
   </div>
+
+
+    <a class="item item-thumbnail-left" href="#">
+      <img src="http://pad1.whstatic.com/images/thumb/7/72/Become-a-Radiology-Technician-Step-5-Version-2.jpg/670px-Become-a-Radiology-Technician-Step-5-Version-2.jpg">
+      <h2>Lara Diologa <i class="icon ion-checkmark-circled"></i></h2> 
+      <p><strong>Radiologa</strong>  </p>
+      <p>2.9km Belgrano</p>
+      <span class="badge badge-balanced icon-badge">9.2</span>
+      
+    </a>
+     <a class="item item-thumbnail-left" href="#">
+      <img src="http://pad1.whstatic.com/images/thumb/7/72/Become-a-Radiology-Technician-Step-5-Version-2.jpg/670px-Become-a-Radiology-Technician-Step-5-Version-2.jpg">
+      <h2>Mario Yepes<i class="icon ion-checkmark-circled"></i></h2> 
+      <p><strong>Dentista</strong>  </p>
+      <p>4km Recoleta</p>
+      <span class="badge badge-energized icon-badge">5</span>
+      
+    </a>
+    <a class="item item-thumbnail-left" href="#">
+      <img src="http://pad1.whstatic.com/images/thumb/7/72/Become-a-Radiology-Technician-Step-5-Version-2.jpg/670px-Become-a-Radiology-Technician-Step-5-Version-2.jpg">
+      <h2>Lola Membridez <i class="icon ion-checkmark-circled"></i></h2> 
+      <p><strong>Oculista</strong>  </p>
+      <p>9.2km Almagro</p>
+      <span class="badge badge-assertive icon-badge">3.4</span>
+      
+    </a>
+
+ 
 
 </div>
     

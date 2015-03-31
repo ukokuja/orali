@@ -1,10 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope) {
+	$scope.search = function(){
+		alert($scope.search.text);
+	}
+})
 .controller('MapCtrl', function($scope, $ionicLoading, $compile) {
-	
   $scope.initialize = function() {
-    var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+    var myLatlng = new google.maps.LatLng(-34.603075,-58.381653);
     
     var mapOptions = {
       center: myLatlng,

@@ -1,8 +1,22 @@
-<ion-view view-title="Account">
+<ion-view view-title="Perfil">
   <ion-content>
+  <div class="list ">
+      
+      <div class="item item-body">
+        <div>
+          Kevin Kujawski
+        </div>
+      </div>
+    </div>
     <ion-list>
     <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
+        Visible a amigos
+    </ion-toggle>
+    <ion-toggle  ng-model="settings.professionalMode">
+        Modo Profesional
+    </ion-toggle>
+     <ion-toggle  ng-model="settings.anonMode">
+        Modo Anónimo
     </ion-toggle>
     </ion-list>
   </ion-content>

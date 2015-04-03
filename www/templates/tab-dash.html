@@ -1,7 +1,7 @@
 <ion-view view-title="Profesionales">
- 
-  <ion-content class="">
-  <div class="list">
+
+<ion-content class="">
+<div class="list">
 
   <div class="item item-input-inset">
     <label class="item-input-wrapper">
@@ -12,36 +12,57 @@
     </button>
   </div>
 
+  <div ng-repeat="p in profesionales">
 
-    <a class="item item-thumbnail-left" href="#">
-      <img src="http://pad1.whstatic.com/images/thumb/7/72/Become-a-Radiology-Technician-Step-5-Version-2.jpg/670px-Become-a-Radiology-Technician-Step-5-Version-2.jpg">
-      <h2>Lara Diologa <i class="icon ion-checkmark-circled"></i></h2> 
-      <p><strong>Radiologa</strong>  </p>
-      <p>2.9km Belgrano</p>
-      <p>"Excelente profesional, diagnostico al instante"<br> <span class="assertive"> <img src="http://blacksportsonline.com/home/wp-content/uploads/2014/05/lionel-messi_416x416.jpg" height="20" style="border-radius: 20%;vertical-align:middle"> Alejandro Joseph</span></p>
-      <span class="badge badge-balanced icon-badge">9.2</span>
-      
-    </a>
-     <a class="item item-thumbnail-left" href="#">
-      <img src="http://www.odontoclinic.com.br/wp-content/uploads/2013/06/dicas-de-saude-bucal-como-escolher-um-bom-dentista.jpg">
-      <h2>Mario Yepes </h2> 
-      <p><strong>Dentista</strong>  </p>
-      <p>4km Recoleta</p>
-      <span class="badge badge-energized icon-badge">5</span>
-      
-    </a>
-    <a class="item item-thumbnail-left" href="#">
-      <img src="http://www.jujuyaldia.com.ar/wp-content/uploads/2014/01/oculista.jpg">
-      <h2>Lola Membridez </h2> 
-      <p><strong>Oculista</strong>  </p>
-      <p>9.2km Almagro</p>
-      <span class="badge badge-assertive icon-badge">3.4</span>
-      
-    </a>
+ <a class="item item-thumbnail-left" href="#">
+  <img ng-src="{{p.imagen}}">
+  <h2>{{p.nombre}} <i class="icon ion-checkmark-circled"></i></h2> 
+  <p><strong>{{p.especialidad}}</strong>  </p>
+  <p>{{p.distancia}}km {{p.ubicacion}}</p>
+<p ng-repeat="opinion in p.opiniones | filter:first">
+    "{{opinion.opinion}}"
+    <br> <span class="assertive"> <img ng-src="https://graph.facebook.com/{{opinion.usuario.facebook}}/picture" height="20" style="border-radius: 20%;vertical-align:middle"> {{opinion.usuario.nombre}} {{opinion.usuario.apellido}} </span>
+</p>
 
- 
+  <span ng-class="{'badge icon-badge':true,'badge-balanced': p.calificacion > 7 || p.calificacion  === 7 ,
+                  'badge-energized': (p.calificacion > 5 || p.calificacion === 5) && p.calificacion < 7,
+                   'badge-assertive': p.calificacion < 5}" >
+                   {{p.calificacion}}
+
+  </span>
+ </a>
+
+ </div>
+
+ <a class="item item-thumbnail-left" href="#">
+  <img ng-src="http://pad1.whstatic.com/images/thumb/7/72/Become-a-Radiology-Technician-Step-5-Version-2.jpg/670px-Become-a-Radiology-Technician-Step-5-Version-2.jpg">
+  <h2>Lara Diologa <i class="icon ion-checkmark-circled"></i></h2> 
+  <p><strong>Radiologa</strong>  </p>
+  <p>2.9km Belgrano</p>
+  <p>"Excelente profesional, diagnostico al instante"<br> <span class="assertive"> <img src="http://blacksportsonline.com/home/wp-content/uploads/2014/05/lionel-messi_416x416.jpg" height="20" style="border-radius: 20%;vertical-align:middle"> Alejandro Joseph</span></p>
+  <span class="badge badge-balanced icon-badge">9.2</span>
+
+</a>
+<a class="item item-thumbnail-left" href="#">
+  <img ng-src="http://www.odontoclinic.com.br/wp-content/uploads/2013/06/dicas-de-saude-bucal-como-escolher-um-bom-dentista.jpg">
+  <h2>Mario Yepes </h2> 
+  <p><strong>Dentista</strong>  </p>
+  <p>4km Recoleta</p>
+  <span class="badge badge-energized icon-badge">5</span>
+
+</a>
+<a class="item item-thumbnail-left" href="#">
+  <img ng-src="http://www.jujuyaldia.com.ar/wp-content/uploads/2014/01/oculista.jpg">
+  <h2>Lola Membridez </h2> 
+  <p><strong>Oculista</strong>  </p>
+  <p>9.2km Almagro</p>
+  <span class="badge badge-assertive icon-badge">3.4</span>
+
+</a>
+
+
 
 </div>
-    
-  </ion-content>
+
+</ion-content>
 </ion-view>

@@ -12,9 +12,9 @@
     </button>
   </div>
 
-  <div ng-repeat="p in profesionales">
+  <div ng-repeat="p in profesionales" ng-click="detalleProfesional('{{p.id}}')">
 
- <a class="item item-thumbnail-left" href="#">
+ <a class="item item-thumbnail-left" href="" >
   <img ng-src="{{p.imagen}}">
   <h2>{{p.nombre}} <i class="icon ion-checkmark-circled"></i></h2> 
   <p><strong>{{p.especialidad}}</strong>  </p>
@@ -34,31 +34,7 @@
 
  </div>
 
- <a class="item item-thumbnail-left" href="#">
-  <img ng-src="http://pad1.whstatic.com/images/thumb/7/72/Become-a-Radiology-Technician-Step-5-Version-2.jpg/670px-Become-a-Radiology-Technician-Step-5-Version-2.jpg">
-  <h2>Lara Diologa <i class="icon ion-checkmark-circled"></i></h2> 
-  <p><strong>Radiologa</strong>  </p>
-  <p>2.9km Belgrano</p>
-  <p>"Excelente profesional, diagnostico al instante"<br> <span class="assertive"> <img src="http://blacksportsonline.com/home/wp-content/uploads/2014/05/lionel-messi_416x416.jpg" height="20" style="border-radius: 20%;vertical-align:middle"> Alejandro Joseph</span></p>
-  <span class="badge badge-balanced icon-badge">9.2</span>
-
-</a>
-<a class="item item-thumbnail-left" href="#">
-  <img ng-src="http://www.odontoclinic.com.br/wp-content/uploads/2013/06/dicas-de-saude-bucal-como-escolher-um-bom-dentista.jpg">
-  <h2>Mario Yepes </h2> 
-  <p><strong>Dentista</strong>  </p>
-  <p>4km Recoleta</p>
-  <span class="badge badge-energized icon-badge">5</span>
-
-</a>
-<a class="item item-thumbnail-left" href="#">
-  <img ng-src="http://www.jujuyaldia.com.ar/wp-content/uploads/2014/01/oculista.jpg">
-  <h2>Lola Membridez </h2> 
-  <p><strong>Oculista</strong>  </p>
-  <p>9.2km Almagro</p>
-  <span class="badge badge-assertive icon-badge">3.4</span>
-
-</a>
+ 
 
 
 

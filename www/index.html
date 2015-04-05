@@ -25,7 +25,13 @@
 
     <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>  
     <script src="lib/ng-cordova/dist/ng-cordova.js"></script>
+      <!-- RSVP 
+      <script src="path/to/rsvp.min.js"></script>-->
+      <!-- Firebase -->
+
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+      <!-- GeoFire -->
+    <script src="https://cdn.firebase.com/libs/geofire/2.0.0/geofire.min.js"></script>
 
 
   </head>
@@ -45,5 +51,33 @@
       have templates inline in this html file if you'd like).
     -->
     <ion-nav-view></ion-nav-view>
+    <script id="templates/sign-in.html" type="text/ng-template">
+
+      <ion-view view-title="Bienvenido a Orali">
+        <ion-content>
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Usuario</span>
+              <input type="text" ng-model="user.username">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Contraseña</span>
+              <input type="password" ng-model="user.password">
+            </label>
+          </div>
+          <div class="padding">
+            <button class="button button-block button-balanced" ng-click="signIn(user)">
+              Entrar
+            </button>
+            <p class="text-center">
+              <a href="#/forgot-password">Olvidé mi contraseña</a>
+            </p>
+            <button class="button button-block button-positive" ng-click="signIn(user)">
+              Entrar con Facebook
+            </button>
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
   </body>
 </html>

@@ -1,0 +1,27 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (approfesional.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{profesional.nombre}}">
+  <ion-content class="padding">
+    <span class="item item-thumbnail-left" href="" >
+  <img ng-src="{{profesional.imagen}}">
+  <h2>{{profesional.nombre}} <i class="icon ion-checkmark-circled"></i></h2> 
+  <p><strong>{{profesional.especialidad}}</strong>  </p>
+  <p>{{profesional.distancia}}km {{profesional.ubicacion}}</p>
+<p ng-repeat="opinion in profesional.opiniones | filter:first">
+    "{{opinion.opinion}}"
+    <br> <span class="assertive"> <img ng-src="https://graph.facebook.com/{{opinion.usuario.facebook}}/picture" height="20" style="border-radius: 20%;vertical-align:middle"> {{opinion.usuario.nombre}} {{opinion.usuario.apellido}} </span>
+</p>
+
+  <span ng-class="{'badge icon-badge':true,'badge-balanced': profesional.calificacion > 7 || profesional.calificacion  === 7 ,
+                  'badge-energized': (profesional.calificacion > 5 || profesional.calificacion === 5) && profesional.calificacion < 7,
+                   'badge-assertive': profesional.calificacion < 5}" >
+                   {{profesional.calificacion}}
+
+  </span>
+ </span>
+  </ion-content>
+</ion-view>

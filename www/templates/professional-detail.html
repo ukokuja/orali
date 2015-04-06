@@ -5,23 +5,70 @@
   The Friends service returns an array of friend data
 -->
 <ion-view view-title="{{profesional.nombre}}">
-  <ion-content class="padding">
-    <span class="item item-thumbnail-left" href="" >
-  <img ng-src="{{profesional.imagen}}">
-  <h2>{{profesional.nombre}} <i class="icon ion-checkmark-circled"></i></h2> 
-  <p><strong>{{profesional.especialidad}}</strong>  </p>
-  <p>{{profesional.distancia}}km {{profesional.ubicacion}}</p>
-<p ng-repeat="opinion in profesional.opiniones | filter:first">
-    "{{opinion.opinion}}"
-    <br> <span class="assertive"> <img ng-src="https://graph.facebook.com/{{opinion.usuario.facebook}}/picture" height="20" style="border-radius: 20%;vertical-align:middle"> {{opinion.usuario.nombre}} {{opinion.usuario.apellido}} </span>
-</p>
 
-  <span ng-class="{'badge icon-badge':true,'badge-balanced': profesional.calificacion > 7 || profesional.calificacion  === 7 ,
+  <ion-content class="">
+
+  <center class="stable-bg padding-top ">
+
+    <span ng-class="{'badge icon-badge':true,'badge-balanced': profesional.calificacion > 7 || profesional.calificacion  === 7 ,
                   'badge-energized': (profesional.calificacion > 5 || profesional.calificacion === 5) && profesional.calificacion < 7,
                    'badge-assertive': profesional.calificacion < 5}" >
                    {{profesional.calificacion}}
 
-  </span>
- </span>
+ 
+ </span><br>
+    <strong style="text-align:center">{{profesional.nombre}}</strong>
+    <br>
+     <span class="">{{profesional.especialidad}}</span> 
+
+  </center>
+
+   <div class=" tabs-top tabs-icon-top tabs-background-clear  ">
+    <div class="tabs tab-free">
+      <a class="tab-item" href="#">
+        <i class="icon ion-ios-compose-outline"></i>
+        Calificar
+      </a>
+      <a class="tab-item" href="#">
+        <i class="icon ion-heart"></i>
+        Guardar
+      </a>
+      <a class="tab-item" href="#">
+        <i class="icon ion-ios-upload-outline"></i>
+        Compartir
+      </a>
+      <a class="tab-item" href="#">
+        <i class="icon ion-ios-chatboxes-outline"></i>
+        Mensaje
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+  <div class="col col-50">{{profesional.distancia}}km {{profesional.ubicacion}}</div>
+  <div class="col col-50">  <img ng-src="http://maps.googleapis.com/maps/api/staticmap?center=-34.603075,-58.381653&zoom=15&size=200x200&sensor=false&markers=color:blue|-34.603075,-58.381653" width="100% " height="100%"></div>
+</div>
+  
+
+
+
+
+  <div class="list">
+
+    <div ng-repeat="opinion in profesional.opiniones" >
+
+ <a class="item item item-avatar" href="" >
+  <img ng-src="https://graph.facebook.com/{{opinion.usuario.facebook}}/picture" style="border-radius: 20%;vertical-align:middle">
+  <p> "{{opinion.opinion}}"</p>
+  <p ><span class="assertive">{{opinion.usuario.nombre}} {{opinion.usuario.apellido}}</span></p>
+
+
+
+  
+ </a>
+
+ </div>
+
+</div>
   </ion-content>
 </ion-view>

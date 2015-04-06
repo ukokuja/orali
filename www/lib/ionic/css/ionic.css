@@ -3475,6 +3475,13 @@ a.subdued {
  * --------------------------------------------------
  * A navigation bar with any number of tab items supported.
  */
+
+.tab-free{
+  bottom: auto !important;
+  top: auto !important;
+  position:relative !important;
+}
+
 .tabs {
   display: -webkit-box;
   display: -webkit-flex;

@@ -20,7 +20,7 @@ angular.module('starter.controllers', [])
 		 	var prof = {};
 		 	prof.id = key;
 		 	prof.nombre = p.nombre;
-		 	prof.calificacion = p.calificacion;
+		 	prof.calificacion = p.calificacion.puntos / p.calificacion.cantidad;
 		 	prof.ubicacion = p.ubicacion;
 		 	prof.especialidad = p.especialidad;
 		 	prof.imagen = p.imagen;
@@ -28,7 +28,7 @@ angular.module('starter.controllers', [])
 
 		 	prof.opiniones = [];
 
-		 	for(var i = 0; p.opiniones !=null && i < p.opiniones.length; i++){
+		 	for(var i = 0; p.opiniones !=null && i < 1; i++){
 		 		var op = p.opiniones[i];
 
 		 		myDataRef.child("usuarios").child(op.usuario).once("value", function(snapshot){
@@ -125,7 +125,7 @@ angular.module('starter.controllers', [])
 
 
 			prof.nombre = p.nombre;
-			prof.calificacion = p.calificacion;
+			prof.calificacion = (p.calificacion.puntos / p.calificacion.cantidad).toFixed(1);
 			prof.ubicacion = p.ubicacion;
 			prof.especialidad = p.especialidad;
 			prof.imagen = p.imagen;
@@ -142,6 +142,10 @@ $scope.profesional = prof;
 
 		}, 1);
 	})
+
+	myDataRef.child("profesionales").child(pID).child('vistas').transaction(function (current_value) {
+  return (current_value || 0) + 1;
+	});
 		//console.log(prof);
 		
 	

@@ -19,9 +19,9 @@
   <h2>{{p.nombre}} <i class="icon ion-checkmark-circled"></i></h2> 
   <p><strong>{{p.especialidad}}</strong>  </p>
   <p>{{p.distancia}}km {{p.ubicacion}}</p>
-<p ng-if="p.opiniones.length > 0" >
-    "{{p.opiniones[0].opinion}}"
-    <br> <span class="assertive"> <img ng-src="https://graph.facebook.com/{{p.opiniones[0].usuario.facebook}}/picture" height="20" style="border-radius: 20%;vertical-align:middle"> {{p.opiniones[0].usuario.nombre}} {{p.opiniones[0].usuario.apellido}} </span>
+<p ng-repeat="opinion in p.opiniones">
+    "{{opinion.opinion}}"
+    <br> <span class="assertive"> <img ng-src="https://graph.facebook.com/{{opinion.usuario.facebook}}/picture" height="20" style="border-radius: 20%;vertical-align:middle"> {{opinion.usuario.nombre}} {{opinion.usuario.apellido}} </span>
 </p>
 
   <span ng-class="{'badge icon-badge':true,'badge-balanced': p.calificacion > 7 || p.calificacion  === 7 ,

@@ -20,7 +20,7 @@ angular.module('starter.controllers', [])
 		 	var prof = {};
 		 	prof.id = key;
 		 	prof.nombre = p.nombre;
-		 	prof.calificacion = p.calificacion.puntos / p.calificacion.cantidad;
+			prof.calificacion = (p.calificacion.puntos / p.calificacion.cantidad).toFixed(1);
 		 	prof.ubicacion = p.ubicacion;
 		 	prof.especialidad = p.especialidad;
 		 	prof.imagen = p.imagen;

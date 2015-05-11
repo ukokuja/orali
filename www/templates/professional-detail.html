@@ -25,13 +25,13 @@
 
    <div class=" tabs-top tabs-icon-top tabs-background-clear  ">
     <div class="tabs tab-free">
-      <a class="tab-item" href="#">
-        <i class="icon ion-ios-compose-outline"></i>
+      <a class="tab-item" href="#" >
+        <i ng-class='{"icon": true, "ion-ios-compose-outline":!profesional.calificado, "ion-ios-compose calm":profesional.calificado}' ng-click="profesional.calificado = !profesional.calificado;popupCalificar(); "></i>
         Calificar
       </a>
-      <a class="tab-item" href="#">
-        <i class="icon ion-heart"></i>
-        Guardar
+      <a class="tab-item" href="#" >
+        <i ng-class='{"icon": true, "ion-ios-heart-outline":!profesional.favorito, "ion-ios-heart assertive":profesional.favorito}' ng-click="profesional.favorito = !profesional.favorito;favorito(); "></i>
+        Favorito
       </a>
       <a class="tab-item" href="#">
         <i class="icon ion-ios-upload-outline"></i>
@@ -70,5 +70,10 @@
  </div>
 
 </div>
+
+    
+    <script id="popup-template.html" type="text/ng-template">
+      <input ng-model="calificacion.texto" type="text" placeholder="Calificacion">
+    </script>
   </ion-content>
 </ion-view>

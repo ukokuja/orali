@@ -1,5 +1,7 @@
 angular.module('starter.controllers', [])
 
+
+
 .controller('DashCtrl', function($scope, $timeout, $state) {
 	$scope.profesionales = []; 
 		$scope.search = function(){
@@ -115,7 +117,10 @@ angular.module('starter.controllers', [])
 	}
 })
 
-.controller('ViewCtrl', function($scope,$timeout, $stateParams) {
+.controller('ViewCtrl', function($scope,$timeout, $stateParams, $ionicPopup) {
+	var user = {};
+	user.id = "prueba";	
+
 	var pID = $stateParams.id;
 	var prof = {};
 	var myDataRef = new Firebase('https://orali.firebaseio.com/');
@@ -130,6 +135,10 @@ angular.module('starter.controllers', [])
 			prof.especialidad = p.especialidad;
 			prof.imagen = p.imagen;
 			prof.distancia = p.distancia;
+			myDataRef.child("favoritos").child(pID).child(user.id).once("value", function(fechaFavorito){
+				prof.favorito = fechaFavorito.val() != null;
+			});
+			prof.calificado = true;
 
 			prof.opiniones = [];
 $scope.profesional = prof;
@@ -148,6 +157,48 @@ $scope.profesional = prof;
 	});
 		//console.log(prof);
 		
+	$scope.favorito = function(){
+
+		var fav = myDataRef.child("favoritos").child(pID).child(user.id);
+		if($scope.profesional.favorito){
+			var fecha = new Date();
+			fav.set(fecha.toISOString());
+		}else{
+			fav.set(null);	
+		}
+	}
+
+	$scope.popupCalificar = function(){
+		$scope.data = {}
+
+   // An elaborate, custom popup
+   var myPopup = $ionicPopup.show({
+     template: '<input type="text" ng-model="calificacion.texto">',
+     title: 'Escribí tu calificación!',
+     subTitle: '',
+     scope: $scope,
+     buttons: [
+       { text: 'Cancelar' },
+       {
+         text: '<b>Guardar</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+         	alert($scope.calificacion.texto);
+           if (!$scope.calificacion.texto) {
+             //don't allow the user to close unless he enters wifi password
+             e.preventDefault();
+           } else {
+             return $scope.calificacion.texto;
+           }
+         }
+       },
+     ]
+   });
+   myPopup.then(function(res) {
+     console.log('Tapped!', res);
+   });
+
+  };
 	
 });
 

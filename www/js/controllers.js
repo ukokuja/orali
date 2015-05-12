@@ -117,7 +117,7 @@ angular.module('starter.controllers', [])
 	}
 })
 
-.controller('ViewCtrl', function($scope,$timeout, $stateParams, $ionicPopup) {
+.controller('ViewCtrl', function($scope,$timeout, $stateParams, $ionicModal) {
 	var user = {};
 	user.id = "prueba";	
 
@@ -138,7 +138,9 @@ angular.module('starter.controllers', [])
 			myDataRef.child("favoritos").child(pID).child(user.id).once("value", function(fechaFavorito){
 				prof.favorito = fechaFavorito.val() != null;
 			});
-			prof.calificado = true;
+			myDataRef.child("calificaciones").child(pID).child(user.id).on("value", function(snapCalificacion){
+				prof.calificado = snapCalificacion.val() != null;
+			});
 
 			prof.opiniones = [];
 $scope.profesional = prof;
@@ -168,37 +170,34 @@ $scope.profesional = prof;
 		}
 	}
 
-	$scope.popupCalificar = function(){
-		$scope.data = {}
+		$ionicModal.fromTemplateUrl('templates/modal-calificar.html', {
+	    scope: $scope,
+	    animation: 'slide-in-up'
+	  }).then(function(modal) {
+	    $scope.modal = modal;
+	  });
+	  $scope.openModal = function() {
+	    $scope.modal.show();
+	  };
+	  $scope.closeModal = function() { 
+	    $scope.modal.hide();
+	  };
+	  //Cleanup the modal when we're done with it!
+	  $scope.$on('$destroy', function() {
+	    $scope.modal.remove();
+	  });
+	  // Execute action on hide modal
+	  $scope.$on('modal.hidden', function() {
+	    // Execute action
+	  });
+	  // Execute action on remove modal
+	  $scope.$on('modal.removed', function() {
+	    // Execute action
+	  });
 
-   // An elaborate, custom popup
-   var myPopup = $ionicPopup.show({
-     template: '<input type="text" ng-model="calificacion.texto">',
-     title: 'Escribí tu calificación!',
-     subTitle: '',
-     scope: $scope,
-     buttons: [
-       { text: 'Cancelar' },
-       {
-         text: '<b>Guardar</b>',
-         type: 'button-positive',
-         onTap: function(e) {
-         	alert($scope.calificacion.texto);
-           if (!$scope.calificacion.texto) {
-             //don't allow the user to close unless he enters wifi password
-             e.preventDefault();
-           } else {
-             return $scope.calificacion.texto;
-           }
-         }
-       },
-     ]
-   });
-   myPopup.then(function(res) {
-     console.log('Tapped!', res);
-   });
-
-  };
+	  $scope.popupCalificar = function(){
+	  	modal.show();
+	  }
 	
 });
 

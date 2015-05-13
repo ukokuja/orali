@@ -1,0 +1,15 @@
+<div class="modal">
+        <header class="bar bar-header bar-energized">
+          <h1 class="title">Calificar</h1>
+          <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
+        </header>
+        <content has-header="true" padding="true">
+          <br><br>
+          <ul style="padding: 0">
+	    <li ng-repeat="star in [0,1,2,3,4]" style="width:100px" class="icon" ng-class="{'ion-ios-star energized':true}	" ng-click=""></li>
+
+
+	</ul>
+          
+        </content>
+      </div>

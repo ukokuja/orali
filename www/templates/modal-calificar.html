@@ -4,12 +4,24 @@
           <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
         </header>
         <content has-header="true" padding="true">
-          <br><br>
-          <ul style="padding: 0">
-	    <li ng-repeat="star in [0,1,2,3,4]" style="width:100px" class="icon" ng-class="{'ion-ios-star energized':true}	" ng-click=""></li>
+          <br><br><br><br>
+          <center >
+	    <span ng-repeat="star in [1,2,3,4,5]" style="font-size:40pt;" class="icon energized" ng-class="{'ion-ios-star-outline': star > calificacion.valor, 'ion-ios-star': star < calificacion.valor +1 }" ng-click="calificacion.valor = star"></span>
+          
+
+     <br>
+     <br>
+     <textarea style="width:95%;padding:5px; background-color:#eee;color:gray" placeholder="Escribe tu calificación" ng-model="calificacion.texto">
+          </textarea>
+          <br>
+
+    <button id="butCalificar" class="button button-large" ng-click="guardarCalificacion(modal)">
+      Calificar
+    </button>
+ </center>
+          
 
 
-	</ul>
           
         </content>
       </div>

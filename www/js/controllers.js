@@ -141,15 +141,20 @@ angular.module('starter.controllers', [])
 			myDataRef.child("calificaciones").child(pID).child(user.id).on("value", function(snapCalificacion){
 				prof.calificado = snapCalificacion.val() != null;
 			});
+			prof.calificacion.valor = 0;
 
 			prof.opiniones = [];
-$scope.profesional = prof;
-			for(var i = 0; p.opiniones !=null && i < p.opiniones.length; i++){
-				var op = p.opiniones[i];
-				agregarUsuario($scope.profesional.opiniones, op.opinion, op.usuario, $timeout);
-				
+			$scope.profesional = prof;
+			myDataRef.child("calificaciones").child(pID).once("value", function(snapOpiniones){
+				var opiniones = snapOpiniones.val();
+				console.log(opiniones);
+				angular.forEach(opiniones, function(val, key){
+					console.log(val);
+					agregarUsuario($scope.profesional.opiniones, val.texto, key, $timeout);
 
-			}
+				})
+				
+			});
 
 		}, 1);
 	})
@@ -194,10 +199,30 @@ $scope.profesional = prof;
 	  $scope.$on('modal.removed', function() {
 	    // Execute action
 	  });
+	  $scope.calificacion = {};
+	  $scope.calificacion.valor = 0;
+	  $scope.popupCalificar = function(modal){
+	  	if(!$scope.profesional.calificado)
+	  		modal.show();
+	  };
 
-	  $scope.popupCalificar = function(){
-	  	modal.show();
+	   $scope.guardarCalificacion = function(modal){
+	   	var valor = $scope.calificacion.valor*2;
+	   	var texto = $scope.calificacion.texto;
+
+	   	var calif = myDataRef.child("calificaciones").child(pID).child(user.id);
+	   	calif.set({texto: texto, puntaje: valor});
+
+	   	myDataRef.child("profesionales").child(pID).child('calificacion').child('cantidad').transaction(function (current_value) {
+		  return (current_value || 0) + 1;
+		});
+
+		myDataRef.child("profesionales").child(pID).child('calificacion').child('puntos').transaction(function (current_value) {
+		  return (current_value || 0) + valor;
+		});
+	  	modal.hide();
 	  }
+
 	
 });
 

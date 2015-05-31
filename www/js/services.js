@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['ionic.utils'])
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
@@ -47,4 +47,27 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+})
+.factory('especialidades', function($timeout, $localstorage) {
+  return {
+    buscar: function(id_especialidad){
+      var especialidades = $localstorage.getObject("especialidades");
+      var especialidad = especialidades[id_especialidad];
+      if(especialidad === undefined){
+        var myDataRef = new Firebase('https://orali.firebaseio.com/');
+
+        myDataRef.child("especialidades").child(id_especialidad).once("value", function(snapEspecialidad){
+          especialidad = snapEspecialidad.val();
+          especialidades[id_especialidad] = especialidad;
+          $localstorage.setObject("especialidades", especialidades);
+          console.log(especialidad.nombre);
+
+          return especialidad.nombre;
+        });
+      }else{
+        return especialidad.nombre;
+      }
+    }
+  }
+})
+;

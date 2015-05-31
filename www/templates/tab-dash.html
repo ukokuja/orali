@@ -5,7 +5,7 @@
 
   <div class="item item-input-inset">
     <label class="item-input-wrapper">
-      <input type="text" placeholder="Buscar en Orali" ng-model="search.text">
+      <input type="text" placeholder="Buscar en Proffety" ng-model="search.text">
     </label>
     <button id="searchButton" class="button button-small" ng-click="search()">
       Buscar
@@ -17,7 +17,7 @@
  <a class="item item-thumbnail-left" href="" >
   <img ng-src="{{p.imagen}}">
   <h2>{{p.nombre}} <i class="icon ion-checkmark-circled"></i></h2> 
-  <p><strong>{{p.especialidad}}</strong>  </p>
+  <p><strong >{{p.especialidad}}</strong>  </p>
   <p>{{p.distancia}}km {{p.ubicacion}}</p>
 <p ng-repeat="opinion in p.opiniones">
     "{{opinion.opinion}}"

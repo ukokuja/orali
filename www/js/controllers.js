@@ -1,11 +1,11 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ionic','ionic.utils'])
 
 
 
-.controller('DashCtrl', function($scope, $timeout, $state) {
+.controller('DashCtrl', function($scope, $timeout, $state, $localstorage, especialidades) {
 	$scope.profesionales = []; 
-		$scope.search = function(){
-			document.getElementById('searchButton').disabled = true;
+	$scope.search = function(){
+		document.getElementById('searchButton').disabled = true;
 
 		var myDataRef = new Firebase('https://orali.firebaseio.com/');
 		var textoABuscar = $scope.search.text;
@@ -22,9 +22,9 @@ angular.module('starter.controllers', [])
 		 	var prof = {};
 		 	prof.id = key;
 		 	prof.nombre = p.nombre;
-			prof.calificacion = (p.calificacion.puntos / p.calificacion.cantidad).toFixed(1);
+		 	prof.calificacion = (p.calificacion.puntos / p.calificacion.cantidad).toFixed(1);
 		 	prof.ubicacion = p.ubicacion;
-		 	prof.especialidad = p.especialidad;
+		 	prof.especialidad = especialidades.buscar(p.especialidad);
 		 	prof.imagen = p.imagen;
 		 	prof.distancia = p.distancia;
 
@@ -44,14 +44,16 @@ angular.module('starter.controllers', [])
 
 
 
-		 	$timeout(function(){$scope.profesionales.unshift(prof);
-			document.getElementById('searchButton').disabled = false;
+		 	$timeout(function(){
+
+		 		$scope.profesionales.unshift(prof);
+		 		document.getElementById('searchButton').disabled = false;
 		 	}, 1)
 		 }
 		});
-		});
-		
-		var especialidadesRef = myDataRef.child("especialidades")
+});
+
+var especialidadesRef = myDataRef.child("especialidades")
 
 		 //especialidadesRef.push({nombre:"Pediatra"});
 		}
@@ -73,6 +75,28 @@ angular.module('starter.controllers', [])
 		$scope.detalleProfesional = function(id){
 			$state.go('tab.professional-detail', {id: id});
 		}
+
+		$scope.buscarEspecialidad = function(id_especialidad){
+			var especialidades = $localstorage.getObject("especialidades");
+			var especialidad = especialidades[id_especialidad];
+			if(especialidad === undefined){
+				var myDataRef = new Firebase('https://orali.firebaseio.com/');
+
+				myDataRef.child("especialidades").child(id_especialidad).once("value", function(snapEspecialidad){
+					especialidad = snapEspecialidad.val();
+					especialidades[id_especialidad] = especialidad;
+					$localstorage.setObject("especialidades", especialidades);
+					console.log(especialidad.nombre);
+
+					return especialidad.nombre;
+				});
+			}else{
+				return especialidad.nombre;
+			}
+
+
+		}
+
 	})
 .controller('MapCtrl', function($scope, $ionicLoading, $compile) {
 	$scope.initialize = function() {
@@ -147,9 +171,7 @@ angular.module('starter.controllers', [])
 			$scope.profesional = prof;
 			myDataRef.child("calificaciones").child(pID).once("value", function(snapOpiniones){
 				var opiniones = snapOpiniones.val();
-				console.log(opiniones);
 				angular.forEach(opiniones, function(val, key){
-					console.log(val);
 					agregarUsuario($scope.profesional.opiniones, val.texto, key, $timeout);
 
 				})
@@ -159,46 +181,46 @@ angular.module('starter.controllers', [])
 		}, 1);
 	})
 
-	myDataRef.child("profesionales").child(pID).child('vistas').transaction(function (current_value) {
-  return (current_value || 0) + 1;
-	});
+myDataRef.child("profesionales").child(pID).child('vistas').transaction(function (current_value) {
+	return (current_value || 0) + 1;
+});
 		//console.log(prof);
 		
-	$scope.favorito = function(){
+		$scope.favorito = function(){
 
-		var fav = myDataRef.child("favoritos").child(pID).child(user.id);
-		if($scope.profesional.favorito){
-			var fecha = new Date();
-			fav.set(fecha.toISOString());
-		}else{
-			fav.set(null);	
+			var fav = myDataRef.child("favoritos").child(pID).child(user.id);
+			if($scope.profesional.favorito){
+				var fecha = new Date();
+				fav.set(fecha.toISOString());
+			}else{
+				fav.set(null);	
+			}
 		}
-	}
 
 		$ionicModal.fromTemplateUrl('templates/modal-calificar.html', {
-	    scope: $scope,
-	    animation: 'slide-in-up'
-	  }).then(function(modal) {
-	    $scope.modal = modal;
-	  });
-	  $scope.openModal = function() {
-	    $scope.modal.show();
-	  };
-	  $scope.closeModal = function() { 
-	    $scope.modal.hide();
-	  };
+			scope: $scope,
+			animation: 'slide-in-up'
+		}).then(function(modal) {
+			$scope.modal = modal;
+		});
+		$scope.openModal = function() {
+			$scope.modal.show();
+		};
+		$scope.closeModal = function() { 
+			$scope.modal.hide();
+		};
 	  //Cleanup the modal when we're done with it!
 	  $scope.$on('$destroy', function() {
-	    $scope.modal.remove();
+	  	$scope.modal.remove();
 	  });
 	  // Execute action on hide modal
 	  $scope.$on('modal.hidden', function() {
 	    // Execute action
-	  });
+	});
 	  // Execute action on remove modal
 	  $scope.$on('modal.removed', function() {
 	    // Execute action
-	  });
+	});
 	  $scope.calificacion = {};
 	  $scope.calificacion.valor = 0;
 	  $scope.popupCalificar = function(modal){
@@ -206,31 +228,34 @@ angular.module('starter.controllers', [])
 	  		modal.show();
 	  };
 
-	   $scope.guardarCalificacion = function(modal){
-	   	var valor = $scope.calificacion.valor*2;
-	   	var texto = $scope.calificacion.texto;
+	  $scope.guardarCalificacion = function(modal){
+	  	var valor = $scope.calificacion.valor*2;
+	  	var texto = $scope.calificacion.texto;
 
-	   	var calif = myDataRef.child("calificaciones").child(pID).child(user.id);
-	   	calif.set({texto: texto, puntaje: valor});
+	  	var calif = myDataRef.child("calificaciones").child(pID).child(user.id);
+	  	var fecha = new Date();
+	  	calif.set({texto: texto, puntaje: valor, fecha: fecha.toISOString()});
 
-	   	myDataRef.child("profesionales").child(pID).child('calificacion').child('cantidad').transaction(function (current_value) {
-		  return (current_value || 0) + 1;
-		});
+	  	myDataRef.child("profesionales").child(pID).child('calificacion').child('cantidad').transaction(function (current_value) {
+	  		return (current_value || 0) + 1;
+	  	});
 
-		myDataRef.child("profesionales").child(pID).child('calificacion').child('puntos').transaction(function (current_value) {
-		  return (current_value || 0) + valor;
-		});
+	  	myDataRef.child("profesionales").child(pID).child('calificacion').child('puntos').transaction(function (current_value) {
+	  		return (current_value || 0) + valor;
+	  	});
 	  	modal.hide();
 	  }
 
-	
-});
+
+	});
 
 function agregarUsuario(lista, opinion, usuario, $timeout){
 	var myDataRef = new Firebase('https://orali.firebaseio.com/');
 	myDataRef.child("usuarios").child(usuario).once("value", function(snapUser){
-					$timeout(function(){
-					 lista.push({opinion: opinion, usuario:snapUser.val()
-					 })}, 1);
-				});
+		$timeout(function(){
+			lista.push({opinion: opinion, usuario:snapUser.val()
+			})}, 1);
+	});
 }
+
+
